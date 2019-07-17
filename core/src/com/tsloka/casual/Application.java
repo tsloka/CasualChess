@@ -36,7 +36,7 @@ public class Application extends ApplicationAdapter {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
-        backgroundSprite.draw(spriteBatch);
+        //backgroundSprite.draw(spriteBatch);
         camera.update();
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
@@ -50,8 +50,8 @@ public class Application extends ApplicationAdapter {
             } else {
                 shapeRenderer.setColor(Color.DARK_GRAY);
             }
-            shapeRenderer.rect(leftEndX + (field.getColumn() * 100), leftEndY + (field.getRow() * 100),
-                    100, 100);
+            //shapeRenderer.rect(leftEndX + (field.getColumn() * 100), leftEndY + (field.getRow() * 100),
+            //        100, 100);
 
         }
 
