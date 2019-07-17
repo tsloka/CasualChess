@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class Application extends ApplicationAdapter {
-    Board board;
+    Board board = new Board();
 
     private SpriteBatch spriteBatch;
     private ShapeRenderer shapeRenderer;
@@ -19,6 +19,8 @@ public class Application extends ApplicationAdapter {
 
     private int resolutionX = 1600;
     private int resolutionY = 900;
+    private final int leftEndX = -400;
+    private final int leftEndY = -400;
 
     @Override
     public void create() {
@@ -39,7 +41,13 @@ public class Application extends ApplicationAdapter {
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         for (Field field : board.getFields()) {
-
+            if (field.getColour() == Colour.WHITE) {
+                shapeRenderer.setColor(Color.LIGHT_GRAY);
+            } else {
+                shapeRenderer.setColor(Color.DARK_GRAY);
+            }
+            shapeRenderer.rect(leftEndX + (field.getColumn() * 100), leftEndY + (field.getRow() * 100),
+                    100, 100);
         }
         shapeRenderer.end();
         spriteBatch.end();

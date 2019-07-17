@@ -34,8 +34,8 @@ public class Board {
         return board;
     }
 
-    public LinkedList<Field> getFields(){
-        return Arrays.stream(board).collect(toList());
+    public List<Field> getFields(){
+        return Arrays.stream(board).flatMap(fields -> Arrays.stream(fields)).collect(toList());
     }
 
     public void fillWithChess() {
