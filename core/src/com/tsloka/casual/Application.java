@@ -22,13 +22,28 @@ public class Application extends ApplicationAdapter {
     private final int leftEndX = -400;
     private final int leftEndY = -400;
 
+    public void createFiguresTextures() {
+        Sprite blackBishop = new Sprite(new Texture("core/assets/BlackBishop.png"));
+        Sprite blackKing = new Sprite(new Texture("core/assets/BlackKing.png"));
+        Sprite blackKnight = new Sprite(new Texture("core/assets/BlackKnight.png"));
+        Sprite blackPawn = new Sprite(new Texture("core/assets/BlackPawn.png"));
+        Sprite blackQueen = new Sprite(new Texture("core/assets/BlackQueen.png"));
+        Sprite blackRook = new Sprite(new Texture("core/assets/BlackRook.png"));
+        Sprite whiteBishop = new Sprite(new Texture("core/assets/WhiteBishop.png"));
+        Sprite whiteKing = new Sprite(new Texture("core/assets/WhiteKing.png"));
+        Sprite whiteKnight = new Sprite(new Texture("core/assets/WhiteKnight.png"));
+        Sprite whitePawn = new Sprite(new Texture("core/assets/WhitePawn.png"));
+        Sprite whiteQueen = new Sprite(new Texture("core/assets/WhiteQueen.png"));
+        Sprite whiteRook = new Sprite(new Texture("core/assets/WhiteRook.png"));
+    }
+
     @Override
     public void create() {
         spriteBatch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
         camera = new OrthographicCamera(resolutionX, resolutionY);
-        backgroundTexture = new Texture("core/assets/indigo-leather.png");
-        backgroundSprite = new Sprite(backgroundTexture);
+        backgroundSprite = new Sprite(new Texture("core/assets/indigo-leather.png"));
+        createFiguresTextures();
     }
 
     @Override
@@ -36,13 +51,17 @@ public class Application extends ApplicationAdapter {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
-        //backgroundSprite.draw(spriteBatch);
+        backgroundSprite.draw(spriteBatch);
         camera.update();
+        spriteBatch.end();
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         for (Field field : board.getFields()) {
-            if (field.isEmpty() == false) {
-                Sprite figureSprite = new Sprite(field.getFigure().getTexture());
+            if (!field.isEmpty()) {
+                Sprite figureSprite = new Sprite();
+                        leftEndX + 5 + (field.getColumn() * 100),
+                        leftEndY + 5 + (field.getRow() * 100),
+                        90, 90);
                 figureSprite.draw(spriteBatch);
             }
             if (field.getColour() == Colour.WHITE) {
@@ -50,13 +69,12 @@ public class Application extends ApplicationAdapter {
             } else {
                 shapeRenderer.setColor(Color.DARK_GRAY);
             }
-            //shapeRenderer.rect(leftEndX + (field.getColumn() * 100), leftEndY + (field.getRow() * 100),
-            //        100, 100);
-
+            shapeRenderer.rect(leftEndX + (field.getColumn() * 100),
+                    leftEndY + (field.getRow() * 100),
+                    100, 100);
         }
 
         shapeRenderer.end();
-        spriteBatch.end();
     }
 
     @Override

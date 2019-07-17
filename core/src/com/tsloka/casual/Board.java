@@ -28,6 +28,7 @@ public class Board {
                 }
             }
         }
+        fillWithChess();
     }
 
     public Field[][] getBoard() {

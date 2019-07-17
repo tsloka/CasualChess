@@ -8,5 +8,4 @@ public interface Figure {
     FigureType getType();
     Colour getColour();
     List<Field> availableMoves();
-    Texture getTexture();
 }
