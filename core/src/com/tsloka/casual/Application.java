@@ -38,7 +38,7 @@ public class Application extends ApplicationAdapter {
         camera.update();
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        for (Field field : board.getBoard()) {
+        for (Field field : board.getFields()) {
 
         }
         shapeRenderer.end();
