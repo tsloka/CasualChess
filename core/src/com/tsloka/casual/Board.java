@@ -1,16 +1,13 @@
 package com.tsloka.casual;
 
 public class Board {
-    Field[][] board = new Field[8][8];
+    final Field[][] board = new Field[8][8];
 
     public Board() {
         for (int i = 0; i <= 7; i++) {
             for (int j = 0; j <= 7; j++) {
                 boolean isBlack = false;
-                if (i % 2 == 0) {
-                    isBlack = true;
-                }
-                if (j % 2 == 0) {
+                if ((i + j) % 2 == 0) {
                     isBlack = true;
                 } else {
                     isBlack = false;
@@ -24,8 +21,12 @@ public class Board {
         }
     }
 
-    public void fillWithChess() {
+    public Field[][] getBoard() {
+        return board;
+    }
 
+    public void fillWithChess() {
+        //ToDo
 
     }
 

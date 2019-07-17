@@ -1,5 +1,3 @@
 package com.tsloka.casual;
 
-public enum Colour {
-    WHITE, BLACK;
-}
+public enum Colour {WHITE, BLACK}

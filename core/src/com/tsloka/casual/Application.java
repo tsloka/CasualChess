@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class Application extends ApplicationAdapter {
+    Board board;
+
     private SpriteBatch spriteBatch;
     private ShapeRenderer shapeRenderer;
     private OrthographicCamera camera;
@@ -29,25 +31,15 @@ public class Application extends ApplicationAdapter {
 
     @Override
     public void render() {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
         backgroundSprite.draw(spriteBatch);
         camera.update();
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                switch ((i + j) % 2) {
-                    case 0:
-                        shapeRenderer.setColor(Color.DARK_GRAY);
-                        break;
-                    case 1:
-                        shapeRenderer.setColor(Color.LIGHT_GRAY);
-                        break;
-                }
-                shapeRenderer.rect((-400 + j * 100), (-400 + i * 100), 100, 100);
-            }
+        for (Field field : board.getBoard()) {
+
         }
         shapeRenderer.end();
         spriteBatch.end();

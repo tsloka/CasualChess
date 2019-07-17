@@ -23,7 +23,7 @@ public class Field {
         return colour;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return figure == null;
     }
 
