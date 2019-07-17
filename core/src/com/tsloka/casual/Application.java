@@ -41,6 +41,10 @@ public class Application extends ApplicationAdapter {
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         for (Field field : board.getFields()) {
+            if (field.isEmpty() == false) {
+                Sprite figureSprite = new Sprite(field.getFigure().getTexture());
+                figureSprite.draw(spriteBatch);
+            }
             if (field.getColour() == Colour.WHITE) {
                 shapeRenderer.setColor(Color.LIGHT_GRAY);
             } else {
@@ -48,7 +52,9 @@ public class Application extends ApplicationAdapter {
             }
             shapeRenderer.rect(leftEndX + (field.getColumn() * 100), leftEndY + (field.getRow() * 100),
                     100, 100);
+
         }
+
         shapeRenderer.end();
         spriteBatch.end();
     }

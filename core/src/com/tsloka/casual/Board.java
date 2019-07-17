@@ -34,13 +34,28 @@ public class Board {
         return board;
     }
 
-    public List<Field> getFields(){
+    public List<Field> getFields() {
         return Arrays.stream(board).flatMap(fields -> Arrays.stream(fields)).collect(toList());
     }
 
     public void fillWithChess() {
-        //ToDo
+        fillFigures(Colour.WHITE, 0);
+        for (int i = 0; i < 8; i++){
+            board[1][i].setFigure(new Pawn(Colour.WHITE));
+            board[6][i].setFigure(new Pawn(Colour.BLACK));
+        }
+        fillFigures(Colour.BLACK, 7);
+    }
 
+    public void fillFigures(Colour colour, int row) {
+        board[row][0].setFigure(new Rook(colour));
+        board[row][1].setFigure(new Knight(colour));
+        board[row][2].setFigure(new Bishop(colour));
+        board[row][3].setFigure(new Queen(colour));
+        board[row][4].setFigure(new King(colour));
+        board[row][5].setFigure(new Bishop(colour));
+        board[row][6].setFigure(new Knight(colour));
+        board[row][7].setFigure(new Rook(colour));
     }
 
 }

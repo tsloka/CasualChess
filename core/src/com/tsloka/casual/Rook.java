@@ -33,4 +33,9 @@ public class Rook implements Figure {
         // ToDo
         return null;
     }
+
+    @Override
+    public Texture getTexture() {
+        return texture;
+    }
 }
