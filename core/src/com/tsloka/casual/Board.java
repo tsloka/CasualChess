@@ -32,7 +32,7 @@ public class Board {
     }
 
     public List<Field> getFields() {
-        return Arrays.stream(board).flatMap(fields -> Arrays.stream(fields)).collect(toList());
+        return Arrays.stream(board).flatMap(Arrays::stream).collect(toList());
     }
 
     public void fillWithChess() {

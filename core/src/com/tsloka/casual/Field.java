@@ -17,8 +17,6 @@ public class Field {
         this.colour = colour;
         this.column = column;
         this.row = row;
-        figure.setActualColumn(column);
-        figure.setActualRow(row);
     }
 
     public Colour getColour() {
