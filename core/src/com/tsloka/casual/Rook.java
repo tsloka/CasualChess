@@ -5,6 +5,24 @@ import java.util.List;
 public class Rook implements Figure {
     final FigureType figureType = FigureType.ROOK;
     final Colour colour;
+    private int actualRow;
+    private int actualColumn;
+
+    public int getActualRow() {
+        return actualRow;
+    }
+
+    public void setActualRow(int actualRow) {
+        this.actualRow = actualRow;
+    }
+
+    public int getActualColumn() {
+        return actualColumn;
+    }
+
+    public void setActualColumn(int actualColumn) {
+        this.actualColumn = actualColumn;
+    }
 
     public Rook(Colour colour) {
         this.colour = colour;

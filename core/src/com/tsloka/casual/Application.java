@@ -2,10 +2,15 @@ package com.tsloka.casual;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class Application extends ApplicationAdapter {
     Board board = new Board();
@@ -13,14 +18,14 @@ public class Application extends ApplicationAdapter {
     private SpriteBatch spriteBatch;
     private ShapeRenderer shapeRenderer;
     private OrthographicCamera camera;
-
-    private static Texture backgroundTexture;
+    private Stage stage;
+    private static final String TAG = Application.class.getName();
     private static Sprite backgroundSprite;
 
     private int resolutionX = 1600;
     private int resolutionY = 900;
-    private final int leftEndX = -400;
-    private final int leftEndY = -400;
+    private final int leftEndX = 400;
+    private final int leftEndY = 50;
 
     private static Texture blackBishop;
     private static Texture blackKing;
@@ -34,6 +39,98 @@ public class Application extends ApplicationAdapter {
     private static Texture whitePawn;
     private static Texture whiteQueen;
     private static Texture whiteRook;
+
+    @Override
+    public void create() {
+        Gdx.app.log(TAG, "Creation");
+        stage = new Stage(new ScreenViewport());
+        spriteBatch = new SpriteBatch();
+        shapeRenderer = new ShapeRenderer();
+        camera = new OrthographicCamera(resolutionX, resolutionY);
+        backgroundSprite = new Sprite(new Texture("core/assets/indigo-leather.png"));
+        blackBishop = new Texture("core/assets/BlackBishop.png");
+        blackKing = new Texture("core/assets/BlackKing.png");
+        blackKnight = new Texture("core/assets/BlackKnight.png");
+        blackPawn = new Texture("core/assets/BlackPawn.png");
+        blackQueen = new Texture("core/assets/BlackQueen.png");
+        blackRook = new Texture("core/assets/BlackRook.png");
+        whiteBishop = new Texture("core/assets/WhiteBishop.png");
+        whiteKing = new Texture("core/assets/WhiteKing.png");
+        whiteKnight = new Texture("core/assets/WhiteKnight.png");
+        whitePawn = new Texture("core/assets/WhitePawn.png");
+        whiteQueen = new Texture("core/assets/WhiteQueen.png");
+        whiteRook = new Texture("core/assets/WhiteRook.png");
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        Gdx.app.log(TAG, "Resized");
+        float aspectRatio = 1.0f * width / height;
+        camera.setToOrtho(false, width, height);
+    }
+
+    @Override
+    public void render() {
+        Gdx.app.log(TAG, "Rendered");
+//        long startTimeNs = System.nanoTime();
+        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        spriteBatch.begin();
+        backgroundSprite.draw(spriteBatch);
+        camera.update();
+        spriteBatch.end();
+
+        for (Field field : board.getFields()) {
+            shapeRenderer.setProjectionMatrix(camera.combined);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            if (field.getColour() == Colour.WHITE) {
+                shapeRenderer.setColor(Color.LIGHT_GRAY);
+            } else {
+                shapeRenderer.setColor(Color.DARK_GRAY);
+            }
+            shapeRenderer.rect(leftEndX + (field.getColumn() * 100),
+                    leftEndY + (field.getRow() * 100),
+                    100, 100);
+            shapeRenderer.end();
+
+            // ToDo Refine background of texture to fully transparent and position set to centre of field
+            if (!field.isEmpty()) {
+                spriteBatch.begin();
+                Sprite figureSprite = new Sprite((selectFigureTexture(field.getFigure().getType(),
+                        field.getFigure().getColour())),
+                        0,
+                        0,
+                        90, 90);
+                figureSprite.setCenter((float) ((field.getColumn() * 100) + leftEndX + 50),
+                        (float) ((field.getRow() * 100) + leftEndY + 50));
+                figureSprite.draw(spriteBatch);
+                spriteBatch.end();
+            }
+
+        }
+
+//        long endTimeInNs = System.nanoTime();
+//        System.out.println("Render time = " + (endTimeInNs-startTimeNs) + "ns.");
+    }
+
+    @Override
+    public void pause() {
+        Gdx.app.log(TAG, "Paused");
+    }
+
+    @Override
+    public void dispose() {
+        Gdx.app.log(TAG, "Disposed:");
+        spriteBatch.dispose();
+        shapeRenderer.dispose();
+    }
+
+    @Override
+    public void resume() {
+        Gdx.app.log(TAG, "Resumed");
+    }
+
+// Additional methods
 
     public Texture selectFigureTexture(FigureType figureType, Colour colour) {
         Texture returnTexture = null;
@@ -84,67 +181,4 @@ public class Application extends ApplicationAdapter {
         return returnTexture;
     }
 
-    @Override
-    public void create() {
-        spriteBatch = new SpriteBatch();
-        shapeRenderer = new ShapeRenderer();
-        camera = new OrthographicCamera(resolutionX, resolutionY);
-        backgroundSprite = new Sprite(new Texture("core/assets/indigo-leather.png"));
-        blackBishop = new Texture("core/assets/BlackBishop.png");
-        blackKing = new Texture("core/assets/BlackKing.png");
-        blackKnight = new Texture("core/assets/BlackKnight.png");
-        blackPawn = new Texture("core/assets/BlackPawn.png");
-        blackQueen = new Texture("core/assets/BlackQueen.png");
-        blackRook = new Texture("core/assets/BlackRook.png");
-        whiteBishop = new Texture("core/assets/WhiteBishop.png");
-        whiteKing = new Texture("core/assets/WhiteKing.png");
-        whiteKnight = new Texture("core/assets/WhiteKnight.png");
-        whitePawn = new Texture("core/assets/WhitePawn.png");
-        whiteQueen = new Texture("core/assets/WhiteQueen.png");
-        whiteRook = new Texture("core/assets/WhiteRook.png");
-    }
-
-    @Override
-    public void render() {
-        Gdx.gl.glClearColor(0, 0, 0, 0);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        spriteBatch.begin();
-        backgroundSprite.draw(spriteBatch);
-        camera.update();
-        spriteBatch.end();
-
-        for (Field field : board.getFields()) {
-            shapeRenderer.setProjectionMatrix(camera.combined);
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            if (field.getColour() == Colour.WHITE) {
-                shapeRenderer.setColor(Color.LIGHT_GRAY);
-            } else {
-                shapeRenderer.setColor(Color.DARK_GRAY);
-            }
-            shapeRenderer.rect(leftEndX + (field.getColumn() * 100),
-                    leftEndY + (field.getRow() * 100),
-                    100, 100);
-            shapeRenderer.end();
-
-            //This part either doesn`t work or creates figures in lower left corner
-            if (!field.isEmpty()) {
-                spriteBatch.begin();
-                Sprite figureSprite = new Sprite((selectFigureTexture(field.getFigure().getType(), field.getFigure().getColour())),
-                        leftEndX + 5 + (field.getColumn() * 100),
-                        leftEndY + 5 + (field.getRow() * 100),
-                        90, 90);
-                figureSprite.draw(spriteBatch);
-                spriteBatch.end();
-            }
-
-        }
-
-
-    }
-
-    @Override
-    public void dispose() {
-        spriteBatch.dispose();
-        shapeRenderer.dispose();
-    }
 }
