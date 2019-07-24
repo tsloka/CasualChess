@@ -40,6 +40,7 @@ public class Bishop implements Figure {
 
     @Override
     public List<Field> availableMoves() {
+        // ToDo
         return null;
     }
 

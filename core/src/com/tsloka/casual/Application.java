@@ -106,11 +106,7 @@ public class Application extends ApplicationAdapter {
                 figureSprite.draw(spriteBatch);
                 spriteBatch.end();
             }
-
         }
-
-//        long endTimeInNs = System.nanoTime();
-//        System.out.println("Render time = " + (endTimeInNs-startTimeNs) + "ns.");
     }
 
     @Override
