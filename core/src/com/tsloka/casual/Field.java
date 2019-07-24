@@ -1,5 +1,7 @@
 package com.tsloka.casual;
 
+import java.util.Objects;
+
 public class Field {
     private Figure figure;
     private final Colour colour;
@@ -17,6 +19,20 @@ public class Field {
         this.colour = colour;
         this.column = column;
         this.row = row;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Field field = (Field) o;
+        return column == field.column &&
+                row == field.row;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(column, row);
     }
 
     public Colour getColour() {
