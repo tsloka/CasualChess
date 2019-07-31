@@ -1,13 +1,18 @@
 package com.tsloka.casual;
 
 public class Rook implements Figure {
-    final FigureType figureType = FigureType.ROOK;
-    final Colour colour;
+    private final FigureType figureType = FigureType.ROOK;
+    private final Colour colour;
     private boolean isFirstMove;
 
     @Override
-    public boolean isFirstMove() {
+    public boolean getIsFirstMove() {
         return isFirstMove;
+    }
+
+    @Override
+    public void otherThanFirstMove() {
+        isFirstMove = false;
     }
 
     public Rook(Colour colour) {

@@ -8,39 +8,42 @@ public class FigureMover {
     private Board board;
     private Field startingField;
     private Field endingField;
+    private boolean checkFinder = true;
+    private Colour actualPlayer = Colour.WHITE;
 
     public FigureMover() {
     }
 
     public List<Field> highlightAvailableMoves(Field startingField) {
         List<Field> availableMoves = new ArrayList<>();
-        List<Field> temporary = board.getFields().stream().filter(Field::isEmpty).collect(Collectors.toList());
+        List<Field> allFields = board.getFields().stream().filter(Field::isEmpty).collect(Collectors.toList());
         switch (startingField.getFigure().getType()) {
             case QUEEN:
-                List<Field> diagonalQueenFields = checkDiagonal(7,startingField,temporary);
-                List<Field> axialQueenFields = checkInAxis(7,startingField,temporary);
+                List<Field> diagonalQueenFields = checkDiagonal(7, startingField, allFields);
+                List<Field> axialQueenFields = checkAxial(7, startingField, allFields);
                 availableMoves.addAll(diagonalQueenFields);
                 availableMoves.addAll(axialQueenFields);
 
                 break;
             case KING:
-                List<Field> diagonalKingFields = checkDiagonal(1,startingField,temporary);
-                List<Field> axialKingFields = checkInAxis(1,startingField,temporary);
+                List<Field> diagonalKingFields = checkDiagonal(1, startingField, allFields);
+                List<Field> axialKingFields = checkAxial(1, startingField, allFields);
                 availableMoves.addAll(diagonalKingFields);
                 availableMoves.addAll(axialKingFields);
 
                 // ToDo Castling
+                // ToDo Checkfinder
                 break;
             case ROOK:
-                availableMoves.addAll(checkInAxis(7,startingField,temporary));
+                availableMoves.addAll(checkAxial(7, startingField, allFields));
                 // ToDo Castling
                 break;
             case BISHOP:
-                availableMoves.addAll(checkDiagonal(7,startingField,temporary));
+                availableMoves.addAll(checkDiagonal(7, startingField, allFields));
 
                 break;
             case PAWN:
-                if (startingField.getFigure().isFirstMove()) {
+                if (startingField.getFigure().getIsFirstMove()) {
                     board.getFields().stream().filter(Field::isEmpty)
                             .filter(field -> field.getColumn() == startingField.getColumn()
                                     && field.getRow() != startingField.getRow())
@@ -73,14 +76,21 @@ public class FigureMover {
     }
 
     public void moveFigure(Field startingField, Field endingField) {
-        // ToDo
+        // ToDo moveFigure method
         // Remember pawn promotion, pawn en passant
         // Remember king castling, check, checkmate
-
+        // Remember to change boolean getIsFirstMove to false
+        startingField.getFigure().otherThanFirstMove();
+        if (actualPlayer.equals(Colour.WHITE)) {
+            actualPlayer = Colour.BLACK;
+        } else {
+            actualPlayer = Colour.WHITE;
+        }
     }
 
     public static List<Field> checkDiagonal(int j, Field startingField, List<Field> tList) {
         List<Field> returnList = new ArrayList<>();
+
         for (int i = 1; i <= j; i++) {
             for (Field field : tList) {
                 if ((field.getRow() == (startingField.getRow() + i)) &&
@@ -91,14 +101,16 @@ public class FigureMover {
                                 (field.getColumn() == (startingField.getColumn() - i)) ||
                         (field.getRow() == (startingField.getRow() - i)) &&
                                 (field.getColumn() == (startingField.getColumn() + i))) {
-                    returnList.add(field);
+                    if (field.isEmpty()) {
+                        returnList.add(field);
+                    }
                 }
             }
         }
         return returnList;
     }
 
-    public static List<Field> checkInAxis(int j, Field startingField, List<Field> tList) {
+    public static List<Field> checkAxial(int j, Field startingField, List<Field> tList) {
         List<Field> returnList = new ArrayList<>();
         for (int i = 1; i <= j; i++) {
             for (Field field : tList) {
@@ -115,5 +127,13 @@ public class FigureMover {
             }
         }
         return returnList;
+    }
+
+    public boolean checkFinder (King king) {
+        // ToDo CheckFinder method
+        if (Field endingField.getFigure().) {
+
+        }
+        return checkFinder;
     }
 }

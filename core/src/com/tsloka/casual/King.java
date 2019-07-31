@@ -1,13 +1,18 @@
 package com.tsloka.casual;
 
 public class King implements Figure {
-    final FigureType figureType = FigureType.KING;
-    final Colour colour;
+    private final FigureType figureType = FigureType.KING;
+    private final Colour colour;
     private boolean isFirstMove;
 
     @Override
-    public boolean isFirstMove() {
+    public boolean getIsFirstMove() {
         return isFirstMove;
+    }
+
+    @Override
+    public void otherThanFirstMove() {
+        isFirstMove = false;
     }
 
     public King(Colour colour) {

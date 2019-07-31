@@ -1,13 +1,18 @@
 package com.tsloka.casual;
 
 public class Bishop implements Figure {
-    final FigureType figureType = FigureType.BISHOP;
-    final Colour colour;
+    private final FigureType figureType = FigureType.BISHOP;
+    private final Colour colour;
     private boolean isFirstMove;
 
     @Override
-    public boolean isFirstMove() {
+    public boolean getIsFirstMove() {
         return false;
+    }
+
+    @Override
+    public void otherThanFirstMove() {
+        isFirstMove = false;
     }
 
     public Bishop(Colour colour) {

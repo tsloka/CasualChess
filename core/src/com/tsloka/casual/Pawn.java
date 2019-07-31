@@ -1,13 +1,18 @@
 package com.tsloka.casual;
 
 public class Pawn implements Figure {
-    protected final FigureType figureType = FigureType.PAWN;
-    protected final Colour colour;
+    private final FigureType figureType = FigureType.PAWN;
+    private final Colour colour;
     private boolean isFirstMove;
 
     @Override
-    public boolean isFirstMove() {
+    public boolean getIsFirstMove() {
         return isFirstMove;
+    }
+
+    @Override
+    public void otherThanFirstMove() {
+        isFirstMove = false;
     }
 
     public Pawn(Colour colour) {

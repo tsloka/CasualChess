@@ -1,13 +1,18 @@
 package com.tsloka.casual;
 
 public class Knight implements Figure {
-    final FigureType figureType = FigureType.KNIGHT;
-    final Colour colour;
+    private final FigureType figureType = FigureType.KNIGHT;
+    private final Colour colour;
     private boolean isFirstMove;
 
     @Override
-    public boolean isFirstMove() {
+    public boolean getIsFirstMove() {
         return isFirstMove;
+    }
+
+    @Override
+    public void otherThanFirstMove() {
+        isFirstMove = false;
     }
 
     public Knight(Colour colour) {
