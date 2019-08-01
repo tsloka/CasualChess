@@ -80,7 +80,12 @@ public class FigureMover {
         // Remember pawn promotion, pawn en passant
         // Remember king castling, check, checkmate
         // Remember to change boolean getIsFirstMove to false
-        startingField.getFigure().otherThanFirstMove();
+
+        // if (checkFinder()) break execution, sout Move unavailable, your King is checked;
+        // if check and no available moves execute checkmate
+        Figure figureMoved;
+        endingField.setFigure(startingField.getFigure());
+        endingField.getFigure().otherThanFirstMove();
         if (actualPlayer.equals(Colour.WHITE)) {
             actualPlayer = Colour.BLACK;
         } else {
@@ -89,8 +94,7 @@ public class FigureMover {
     }
 
     public static List<Field> checkDiagonal(int j, Field startingField, List<Field> tList) {
-        List<Field> returnList = new ArrayList<>();
-
+        List<Field> diagonalFields = new ArrayList<>();
         for (int i = 1; i <= j; i++) {
             for (Field field : tList) {
                 if ((field.getRow() == (startingField.getRow() + i)) &&
@@ -102,16 +106,16 @@ public class FigureMover {
                         (field.getRow() == (startingField.getRow() - i)) &&
                                 (field.getColumn() == (startingField.getColumn() + i))) {
                     if (field.isEmpty()) {
-                        returnList.add(field);
+                        diagonalFields.add(field);
                     }
                 }
             }
         }
-        return returnList;
+        return diagonalFields;
     }
 
     public static List<Field> checkAxial(int j, Field startingField, List<Field> tList) {
-        List<Field> returnList = new ArrayList<>();
+        List<Field> axialFields = new ArrayList<>();
         for (int i = 1; i <= j; i++) {
             for (Field field : tList) {
                 if ((field.getRow() == startingField.getRow()) &&
@@ -122,18 +126,25 @@ public class FigureMover {
                                 (field.getColumn() == startingField.getColumn()) ||
                         (field.getRow() == (startingField.getRow() + i)) &&
                                 (field.getColumn() == startingField.getColumn())) {
-                    returnList.add(field);
+                    axialFields.add(field);
                 }
             }
         }
-        return returnList;
+        return axialFields;
     }
 
-    public boolean checkFinder (King king) {
+    public boolean checkFinder () {
         // ToDo CheckFinder method
-        if (Field endingField.getFigure().) {
 
-        }
+        //if () {
+
+        //}
         return checkFinder;
+    }
+
+    public void executeEnding() {
+        // check mate
+
+        //
     }
 }

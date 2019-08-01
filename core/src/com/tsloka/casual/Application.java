@@ -95,6 +95,7 @@ public class Application extends ApplicationAdapter {
 
             // ToDo Refine background of texture to fully transparent and position set to centre of field
             if (!field.isEmpty()) {
+                camera.update();
                 spriteBatch.begin();
                 Sprite figureSprite = new Sprite((selectFigureTexture(field.getFigure().getType(),
                         field.getFigure().getColour())),
@@ -106,7 +107,9 @@ public class Application extends ApplicationAdapter {
                 figureSprite.draw(spriteBatch);
                 spriteBatch.end();
             }
+
         }
+
     }
 
     @Override
