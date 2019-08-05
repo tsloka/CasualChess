@@ -10,23 +10,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class Application extends ApplicationAdapter {
-    Board board = new Board();
-
-    private SpriteBatch spriteBatch;
-    private ShapeRenderer shapeRenderer;
-    private OrthographicCamera camera;
-    private Stage stage;
     private static final String TAG = Application.class.getName();
     private static Sprite backgroundSprite;
-
-    private int resolutionX = 1600;
-    private int resolutionY = 900;
-    private final int leftEndX = 400;
-    private final int leftEndY = 50;
-
     private static Texture blackBishop;
     private static Texture blackKing;
     private static Texture blackKnight;
@@ -39,6 +28,16 @@ public class Application extends ApplicationAdapter {
     private static Texture whitePawn;
     private static Texture whiteQueen;
     private static Texture whiteRook;
+    private final int leftEndX = 400;
+    private final int leftEndY = 50;
+    Board board = new Board();
+    ClickListener mouseClick;
+    private SpriteBatch spriteBatch;
+    private ShapeRenderer shapeRenderer;
+    private OrthographicCamera camera;
+    private Stage stage;
+    private int resolutionX = 1600;
+    private int resolutionY = 900;
 
     @Override
     public void create() {
@@ -60,6 +59,7 @@ public class Application extends ApplicationAdapter {
         whitePawn = new Texture("core/assets/WhitePawn.png");
         whiteQueen = new Texture("core/assets/WhiteQueen.png");
         whiteRook = new Texture("core/assets/WhiteRook.png");
+        mouseClick = new ClickListener();
     }
 
     @Override
@@ -95,20 +95,17 @@ public class Application extends ApplicationAdapter {
 
             // ToDo Refine background of texture to fully transparent and position set to centre of field
             if (!field.isEmpty()) {
-                camera.update();
                 spriteBatch.begin();
                 Sprite figureSprite = new Sprite((selectFigureTexture(field.getFigure().getType(),
-                        field.getFigure().getColour())),
-                        0,
-                        0,
-                        90, 90);
-                figureSprite.setCenter((float) ((field.getColumn() * 100) + leftEndX + 50),
-                        (float) ((field.getRow() * 100) + leftEndY + 50));
+                        field.getFigure().getColour())), 0, 0, 90, 90);
+                figureSprite.setBounds((float) ((field.getColumn() * 100) + leftEndX + 5),
+                        (float) ((field.getRow() * 100) + leftEndY + 5), 90, 90);
                 figureSprite.draw(spriteBatch);
                 spriteBatch.end();
             }
 
         }
+
 
     }
 
@@ -180,4 +177,11 @@ public class Application extends ApplicationAdapter {
         return returnTexture;
     }
 
+    public void setMouseClick(ClickListener mouseClick) {
+        this.mouseClick = mouseClick;
+        float clickX = mouseClick.getTouchDownX();
+        float clickY = mouseClick.getTouchDownY();
+
+
+    }
 }
